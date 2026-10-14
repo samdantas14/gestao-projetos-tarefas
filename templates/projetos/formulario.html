@@ -3,22 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastrar projeto</title>
+    <title>
+        {% if projeto %}
+            Editar projeto
+        {% else %}
+            Cadastrar projeto
+        {% endif %}
+    </title>
 </head>
 <body>
-    <h1>Cadastrar projeto</h1>
+    {% if projeto %}
+        <h1>Editar projeto</h1>
+    {% else %}
+        <h1>Cadastrar projeto</h1>
+    {% endif %}
 
     <form method="post">
         {% csrf_token %}
-
         {{ form.as_p }}
 
-        <button type="submit">Salvar projeto</button>
+        <button type="submit">
+            Salvar
+        </button>
     </form>
 
     <p>
         <a href="{% url 'lista_projetos' %}">
-            Voltar para a lista
+            Cancelar e voltar para a lista
         </a>
     </p>
 </body>
