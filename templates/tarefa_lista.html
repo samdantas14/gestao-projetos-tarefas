@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+
+<h1>Tarefas</h1>
+
+<a href="{% url 'nova_tarefa' %}">
+    Nova Tarefa
+</a>
+
+<hr>
+
+{% for tarefa in tarefas %}
+
+    <h2>{{ tarefa.titulo }}</h2>
+
+    <p>
+        Projeto: {{ tarefa.projeto.nome }}
+    </p>
+
+    <p>
+        Prioridade: {{ tarefa.prioridade }}
+    </p>
+
+    <p>
+        Concluído:
+        {% if tarefa.concluido %}
+            Sim
+        {% else %}
+            Não
+        {% endif %}
+    </p>
+
+    <a href="{% url 'editar_tarefa' tarefa.pk %}">
+        Editar
+    </a>
+
+    <form
+        action="{% url 'excluir_tarefa' tarefa.pk %}"
+        method="post"
+        style="display:inline;"
+    >
+        {% csrf_token %}
+
+        <button type="submit">
+            Excluir
+        </button>
+    </form>
+
+    <hr>
+
+{% empty %}
+
+    <p>Nenhuma tarefa cadastrada.</p>
+
+{% endfor %}
+
+{% endblock %}
