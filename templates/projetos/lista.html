@@ -20,7 +20,17 @@
                 <li>
                     <strong>{{ projeto.nome }}</strong><br>
                     {{ projeto.descricao }}<br>
-                    Data de início: {{ projeto.data_inicio }}
+                    Data de início: {{ projeto.data_inicio }}<br>
+
+                    <a href="{% url 'editar_projeto' projeto.pk %}">
+                        Editar
+                    </a>
+
+                    |
+
+                    <a href="{% url 'excluir_projeto' projeto.pk %}">
+                        Excluir
+                    </a>
                 </li>
             {% endfor %}
         </ul>
