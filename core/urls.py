@@ -22,4 +22,31 @@ urlpatterns = [
         views.excluir_projeto,
         name="excluir_projeto",
     ),
+
+    path(
+            'tarefas/',
+            views.lista_tarefas,
+            name='lista_tarefas'
+        ),
+    
+    path(
+            'tarefas/nova/',
+            views.nova_tarefa,
+            name='nova_tarefa'
+        ),
+    
+    path(
+            'tarefas/editar/<int:pk>/',
+            views.editar_tarefa,
+            name='editar_tarefa'
+        ),
+    
+    path(
+            'tarefas/excluir/<int:pk>/',
+            views.excluir_tarefa,
+            name='excluir_tarefa'
+        ),
 ]
+
+
+   
