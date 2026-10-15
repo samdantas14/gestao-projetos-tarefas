@@ -1,0 +1,4 @@
+
+{% extends 'base.html' %}
+{% block title %}Excluir tarefa | TaskFlow{% endblock %}
+{% block content %}<div class="confirm-wrap"><section class="confirm-card"><div class="warning-icon">!</div><span class="eyebrow">CONFIRMAÇÃO</span><h1>Excluir tarefa?</h1><p>Deseja realmente excluir a tarefa <strong>{{ tarefa.titulo }}</strong> do projeto <strong>{{ tarefa.projeto.nome }}</strong>?</p><form method="post">{% csrf_token %}<div class="form-actions center-actions"><a class="button button-light" href="{% url 'lista_tarefas' %}">Cancelar</a><button class="button button-danger" type="submit">Sim, excluir</button></div></form></section></div>{% endblock %}

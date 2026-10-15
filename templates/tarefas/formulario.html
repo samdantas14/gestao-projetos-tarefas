@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% block title %}{% if tarefa %}Editar tarefa{% else %}Nova tarefa{% endif %} | TaskFlow{% endblock %}
+{% block content %}
+<div class="form-page"><a class="back-link" href="{% url 'lista_tarefas' %}">← Voltar para tarefas</a><section class="form-card"><div class="form-heading"><span class="eyebrow">TAREFAS</span><h1>{% if tarefa %}Editar tarefa{% else %}Criar nova tarefa{% endif %}</h1><p class="muted">Defina o título, a prioridade e o projeto responsável.</p></div>
+<form method="post" class="styled-form">{% csrf_token %}{% if form.non_field_errors %}<div class="form-errors">{{ form.non_field_errors }}</div>{% endif %}{% for field in form %}<div class="form-field"><label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}<span class="required"> *</span>{% endif %}</label>{{ field }}{% if field.help_text %}<small class="help-text">{{ field.help_text }}</small>{% endif %}{% for error in field.errors %}<small class="field-error">{{ error }}</small>{% endfor %}</div>{% endfor %}<div class="form-actions"><a class="button button-light" href="{% url 'lista_tarefas' %}">Cancelar</a><button class="button button-primary" type="submit">Salvar tarefa</button></div></form>
+</section></div>
+{% endblock %}

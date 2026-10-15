@@ -1,41 +1,31 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Projetos</title>
-</head>
-<body>
-    <h1>Projetos cadastrados</h1>
 
-    <p>
-        <a href="{% url 'novo_projeto' %}">
-            Cadastrar novo projeto
-        </a>
-    </p>
+{% extends 'base.html' %}
+{% block title %}Projetos | TaskFlow{% endblock %}
+{% block content %}
+<section class="page-heading">
+  <div><span class="eyebrow">PAINEL DE CONTROLE</span><h1>Seus projetos<span class="heading-dot">.</span></h1><p class="muted">Acompanhe seus projetos e mantenha cada etapa organizada.</p></div>
+  <a class="button button-primary" href="{% url 'novo_projeto' %}">＋ Criar projeto</a>
+</section>
+<div class="stats-grid">
+  <article class="stat-card"><span class="stat-icon purple">▦</span><div><span class="stat-label">Projetos cadastrados</span><strong>{{ projetos|length }}</strong></div></article>
+  <article class="stat-card"><span class="stat-icon blue">✓</span><div><span class="stat-label">Organização</span><strong>Em um só lugar</strong></div></article>
+</div>
+<section class="section-heading"><div><h2>Todos os projetos</h2><p class="muted">Projetos cadastrados no sistema</p></div><span class="count-pill">{{ projetos|length }} projeto(s)</span></section>
+{% if projetos %}
+<div class="project-grid">
+{% for projeto in projetos %}
+  <article class="project-card">
+    <div class="card-top"><span class="project-symbol">▦</span><span class="status-badge">Projeto</span></div>
+    <h3>{{ projeto.nome }}</h3>
+    <p class="project-description">{{ projeto.descricao|default:'Nenhuma descrição informada.'|truncatechars:150 }}</p>
+    <div class="project-meta"><span>◷ Início</span><strong>{{ projeto.data_inicio|date:'d/m/Y' }}</strong></div>
+    <div class="card-actions"><a class="button button-light" href="{% url 'editar_projeto' projeto.pk %}">Editar</a><a class="button button-outline-danger" href="{% url 'excluir_projeto' projeto.pk %}">Excluir</a></div>
+  </article>
+{% endfor %}
+</div>
+{% else %}
+<div class="empty-state"><div class="empty-icon">▦</div><h3>Nenhum projeto por enquanto</h3><p>Crie seu primeiro projeto para começar a organizar as tarefas.</p><a class="button button-primary" href="{% url 'novo_projeto' %}">Criar primeiro projeto</a></div>
+{% endif %}
+{% endblock %}
 
-    {% if projetos %}
-        <ul>
-            {% for projeto in projetos %}
-                <li>
-                    <strong>{{ projeto.nome }}</strong><br>
-                    {{ projeto.descricao }}<br>
-                    Data de início: {{ projeto.data_inicio }}<br>
 
-                    <a href="{% url 'editar_projeto' projeto.pk %}">
-                        Editar
-                    </a>
-
-                    |
-
-                    <a href="{% url 'excluir_projeto' projeto.pk %}">
-                        Excluir
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>Nenhum projeto cadastrado ainda.</p>
-    {% endif %}
-</body>
-</html>
