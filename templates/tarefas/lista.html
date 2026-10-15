@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Tarefas | TaskFlow{% endblock %}
+{% block content %}
+<section class="page-heading"><div><span class="eyebrow">ACOMPANHAMENTO</span><h1>Suas tarefas<span class="heading-dot">.</span></h1><p class="muted">Veja o que precisa ser feito e acompanhe as prioridades.</p></div><a class="button button-primary" href="{% url 'nova_tarefa' %}">＋ Nova tarefa</a></section>
+<div class="stats-grid"><article class="stat-card"><span class="stat-icon purple">✓</span><div><span class="stat-label">Tarefas encontradas</span><strong>{{ tarefas|length }}</strong></div></article><article class="stat-card"><span class="stat-icon blue">↗</span><div><span class="stat-label">Dica</span><strong>Priorize uma de cada vez</strong></div></article></div>
+<section class="section-heading"><div><h2>Lista de tarefas</h2><p class="muted">Tarefas de todos os projetos</p></div><span class="count-pill">{{ tarefas|length }} tarefa(s)</span></section>
+{% if tarefas %}
+<div class="table-wrap"><table class="data-table"><thead><tr><th>Tarefa</th><th>Projeto</th><th>Prioridade</th><th>Status</th><th class="actions-column">Ações</th></tr></thead><tbody>
+{% for tarefa in tarefas %}<tr><td><div class="task-title {% if tarefa.concluido %}task-completed{% endif %}">{{ tarefa.titulo }}</div><small class="muted">Tarefa #{{ tarefa.pk }}</small></td><td>{{ tarefa.projeto.nome }}</td><td><span class="priority priority-{{ tarefa.prioridade|lower }}">{{ tarefa.get_prioridade_display }}</span></td><td>{% if tarefa.concluido %}<span class="status status-done">Concluída</span>{% else %}<span class="status status-pending">Pendente</span>{% endif %}</td><td><div class="inline-actions"><a class="text-action" href="{% url 'editar_tarefa' tarefa.pk %}">Editar</a><a class="text-action danger-text" href="{% url 'excluir_tarefa' tarefa.pk %}">Excluir</a></div></td></tr>{% endfor %}
+</tbody></table></div>
+{% else %}<div class="empty-state"><div class="empty-icon">✓</div><h3>Nenhuma tarefa cadastrada</h3><p>Adicione uma tarefa e associe-a a um projeto.</p><a class="button button-primary" href="{% url 'nova_tarefa' %}">Criar primeira tarefa</a></div>{% endif %}
+{% endblock %}
